@@ -4,17 +4,21 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
 public class JwtUtil {
 
+    public static final SecretKey secretKey;
+
+    static {
+        secretKey = generalKey();
+    }
+
     public static final Long JWT_TTL = 60 * 60 * 1000L;
-    public static final String JWT_KEY = "hjr";
 
     public static String getUUID() {
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -23,7 +27,7 @@ public class JwtUtil {
 
     public static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        SecretKey secretKey = generalKey();
+        //SecretKey secretKey = generalKey();
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         if (ttlMillis == null) {
@@ -56,13 +60,11 @@ public class JwtUtil {
     }
 
     public static SecretKey generalKey() {
-        byte[] encodeKey = Base64.getDecoder().decode(JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodeKey, 0, encodeKey.length, "AES");
-        return key;
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
     public static Claims parseJWT(String jwt) throws Exception {
-        SecretKey secretKey = generalKey();
+        //SecretKey secretKey = generalKey();
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
