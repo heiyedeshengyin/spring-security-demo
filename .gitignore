@@ -113,3 +113,5 @@ local.properties
 *.iml
 out
 gen
+
+src/main/resources/application-work.properties
