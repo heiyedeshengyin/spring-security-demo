@@ -39,7 +39,10 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/login").anonymous()
+                .antMatchers("/hjr").permitAll()
                 .anyRequest().authenticated();
+
+        //http.authorizeRequests().antMatchers("/hello").anonymous().
 
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
