@@ -64,6 +64,8 @@ public class SecurityConfiguration {
                 .accessDeniedHandler(accessDeniedHandler)
 
                 .and()
+                .cors()
+                .and()
                 .build();
     }
 }
