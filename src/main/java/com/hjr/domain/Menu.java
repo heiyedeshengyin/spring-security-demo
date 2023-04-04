@@ -1,6 +1,5 @@
 package com.hjr.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -13,26 +12,24 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "sys_user")
+@TableName(value = "sys_menu")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User implements Serializable {
+public class Menu implements Serializable {
 
-    private static final long serialVersionUID = -2121342349823932L;
+    private static final long serialVersionUID = -4234823827123409L;
 
-    @TableId
     private Long id;
-    private String userName;
-    private String nickName;
-    private String password;
+    private String menuName;
+    private String path;
+    private String component;
+    private String visible;
     private String status;
-    private String email;
-    private String phoneNumber;
-    private String gender;
-    private String avatar;
-    private String userType;
+    private String perms;
+    private String icon;
     private Long createBy;
     private Date createTime;
     private Long updateBy;
     private Date updateTime;
     private Integer delFlag;
+    private String remark;
 }

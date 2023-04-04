@@ -3,6 +3,7 @@ package com.hjr.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hjr.domain.LoginUser;
 import com.hjr.domain.User;
+import com.hjr.mapper.MenuMapper;
 import com.hjr.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,10 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("用户名或密码错误");
         }
 
-        List<String> permissionlist = new ArrayList<>();
-        permissionlist.add("hello");
-        permissionlist.add("admin");
+        List<String> list = menuMapper.selectPermsByUserId(user.getId());
 
-        return new LoginUser(user, permissionlist);
+        return new LoginUser(user, list);
     }
 }
