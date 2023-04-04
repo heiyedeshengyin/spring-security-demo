@@ -53,6 +53,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/user/login").anonymous()
                 .antMatchers("/hjr").permitAll()
+                //.antMatchers("/hello").hasAuthority("system:dept:list")
                 .anyRequest().authenticated()
 
                 .and()
